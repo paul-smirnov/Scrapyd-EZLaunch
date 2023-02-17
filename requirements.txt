@@ -1,0 +1,27 @@
+boto3
+dateparser
+ipython
+scrapyd
+scrapyd-client
+
+#my requirements.txt
+scrapy==2.8.0
+chompjs==1.2.2
+peewee==3.17.0
+psycopg2-binary==2.9.5
+scrapy-poet==0.20.0
+web-poet==0.15.0
+price-parser==0.3.4
+pgeocode==0.4.0
+pycountry==22.3.5
+lxml==4.9.3
+scrapy-autoextract==0.7.0
+requests==2.28.2
+ruff==0.1.8
+jsonschema==4.20.0
+redis==4.5.4
+scrapy-redis==0.7.3
+colorama==0.2.5
+pygsheets==2.0.6
+scrapy-proxies==0.4
+beautifulsoup4==4.12.2

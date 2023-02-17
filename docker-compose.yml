@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  scrapyd:
+    build: .
+    ports:
+      - "6800:6800"
+    environment:
+      - SCRAPYD_USERNAME=${SCRAPYD_USERNAME:-admin}
+      - SCRAPYD_PASSWORD=${SCRAPYD_PASSWORD:-scrapyd}
+    volumes:
+      - ./data:/var/lib/scrapyd
+    restart: unless-stopped
+
+  # Additional service for running Scrapy commands directly
+  scrapy:
+    build: .
+    command: bash
+    volumes:
+      - .:/code
+    working_dir: /code
+    restart: "no"
+
+  # Service for Scrapy runtime API
+  scrapyrt:
+    build: .
+    command: scrapyrt -i 0.0.0.0 -p 9080
+    ports:
+      - "9080:9080"
+    volumes:
+      - .:/code
+    working_dir: /code
+    restart: unless-stopped
