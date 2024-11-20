@@ -2,7 +2,7 @@
 
 # Set username and generate random password if not provided
 : ${SCRAPYD_USERNAME:=admin}
-: ${SCRAPYD_PASSWORD:=$(openssl rand -base64 16)}
+: ${SCRAPYD_PASSWORD:=$(openssl rand -base64 16 | tr -dc 'a-zA-Z0-9' | head -c 16)}
 
 # Fetch the public IP address (ensure curl is installed)
 if command -v curl >/dev/null 2>&1; then
