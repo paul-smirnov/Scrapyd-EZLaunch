@@ -1,8 +1,17 @@
 #!/bin/bash
 
-# Set username and generate random password if not provided
-: ${SCRAPYD_USERNAME:=admin}
-: ${SCRAPYD_PASSWORD:=$(openssl rand -base64 16 | tr -dc 'a-zA-Z0-9' | head -c 16)}
+CREDENTIALS_FILE="scrapyd_credentials.txt"
+
+# Check if credentials file exists and read saved credentials
+if [ -f "$CREDENTIALS_FILE" ]; then
+  echo "Credentials file found. Using saved credentials."
+  SCRAPYD_USERNAME=$(grep "Username:" $CREDENTIALS_FILE | cut -d ' ' -f 2)
+  SCRAPYD_PASSWORD=$(grep "Password:" $CREDENTIALS_FILE | cut -d ' ' -f 2)
+else
+  # Set username and generate random password if not provided
+  : ${SCRAPYD_USERNAME:=admin}
+  : ${SCRAPYD_PASSWORD:=$(openssl rand -base64 16 | tr -dc 'a-zA-Z0-9' | head -c 16)}
+fi
 
 # Fetch the public IP address (ensure curl is installed)
 if command -v curl >/dev/null 2>&1; then
@@ -32,11 +41,12 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Save the credentials to a file
-CREDENTIALS_FILE="scrapyd_credentials.txt"
-echo "URL: http://${PUBLIC_IP}:6800" > $CREDENTIALS_FILE
-echo "Username: $SCRAPYD_USERNAME" >> $CREDENTIALS_FILE
-echo "Password: $SCRAPYD_PASSWORD" >> $CREDENTIALS_FILE
+# Save the credentials to a file if not already saved
+if [ ! -f "$CREDENTIALS_FILE" ]; then
+  echo "URL: http://${PUBLIC_IP}:6800" > $CREDENTIALS_FILE
+  echo "Username: $SCRAPYD_USERNAME" >> $CREDENTIALS_FILE
+  echo "Password: $SCRAPYD_PASSWORD" >> $CREDENTIALS_FILE
+fi
 
 # Define color codes
 GREEN='\033[0;32m'
