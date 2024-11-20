@@ -10,6 +10,7 @@ ARG TARGETPLATFORM
 
 SHELL ["/bin/bash", "-c"]
 
+COPY ./requirements.txt /
 RUN set -xe \
     && echo ${TARGETPLATFORM} \
     && apt-get update \
