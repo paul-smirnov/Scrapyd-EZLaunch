@@ -2,6 +2,10 @@
 
 Automated Scrapyd deployment in Docker
 
+## Description
+
+Scrapyd is a service for running Scrapy spiders remotely. This project provides an automated, containerized deployment solution that simplifies the process of setting up and running Scrapyd with Docker. It includes automated configuration, custom authentication support, and a one-command deployment script for quick and easy setup.
+
 ## Quick Start
 
 ### 1. Modifying Dependencies (optional)
